@@ -6,6 +6,8 @@ package ViewController;
 
 import com.gmail.lrchfox3.basedatos.BD;
 import com.gmail.lrchfox3.basedatos.CnnMySql;
+import com.gmail.lrchfox3.login.model.User;
+import com.gmail.lrchfox3.login.swing.Login;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
@@ -16,7 +18,6 @@ import java.util.ResourceBundle;
 public class inicio {
 
     private static final ResourceBundle cnnConfig = ResourceBundle.getBundle("ViewController/Resources/cnnConfig");
-    
 
     /**
      * @param args the command line arguments
@@ -25,10 +26,10 @@ public class inicio {
         String mensaje = "";
         BD bd = new BD();
         try {
-            bd.iniciarConexion("CONTROL_CLASES", BD.DBMSMSMYSQL, 
-                    cnnConfig.getString("NombreBaseDatos"), 
-                    cnnConfig.getString("Usuario"), 
-                    cnnConfig.getString("Contrasenya"), 
+            bd.iniciarConexion("CONTROL_CLASES", BD.DBMSMSMYSQL,
+                    cnnConfig.getString("NombreBaseDatos"),
+                    cnnConfig.getString("Usuario"),
+                    cnnConfig.getString("Contrasenya"),
                     Integer.valueOf(cnnConfig.getString("Puerto")));
             /*CnnMySql conMySql = new CnnMySql();
              conMySql.setServidor(cnnConfig.getString("NombreServidor"));
@@ -60,6 +61,12 @@ public class inicio {
          //p.setNombre("OCAS");
          new CatalogosBase(p, pBC).setVisible(true);*/
 
-        new FormularioMaestro(mensaje).setVisible(true);
+        Login login = new Login();
+        login.setVisible(true);
+
+        User user = login.getUsuario();
+        if (user != null) {
+            new FormularioMaestro(mensaje).setVisible(true);
+        }
     }
 }
